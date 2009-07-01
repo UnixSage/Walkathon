@@ -1,0 +1,26 @@
+<head>
+  <script>
+    document.getElementById('teamform').style.display = 'none';
+  </script>
+</head>
+
+<form method="POST" action="/new/">
+  <table>
+    {{ formset }}
+  </table>
+  <input type="submit" value="Submit" />
+</form>
+
+<p>
+  Dont See your team listed? Want to create one?
+  <a href="" class="cursor" onclick="show_div('teamform'); return false;">Create Team</a>
+</p>
+
+<div id="teamform">
+  <form method="POST" action="/new/">
+    <table>
+      {{ teamform }}
+    </table>
+    <input type="submit" value="Submit" />
+  </form>
+</div>
