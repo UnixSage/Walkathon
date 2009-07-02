@@ -40,6 +40,19 @@ class Person(models.Model):
     emergency_first = models.CharField(max_length=30)
     emergency_last = models.CharField(max_length=30)
     emergency_phone = models.CharField(max_length=10)
+    
+    def __unicode__(self):
+        return self.last_name+' '+self.first_name
+
+
+class Sponsor(models.Model):
+    walker = models.ForeignKey(Person)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    phone = models.CharField(max_length=10)
+    email = models.CharField(max_length=50)
+    amount = models.DecimalField(max_digits=6, decimal_places=2)
+    paid = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.last_name+' '+self.first_name
