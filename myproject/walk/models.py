@@ -10,13 +10,12 @@ class Team(models.Model):
         ('Honorarium', 'Honorarium'),
     )
     type = models.CharField(max_length=10, choices=TeamTypes)
-    captain = models.ForeignKey('Person', related_name='captain', blank=True, null=True)
+    captain = models.ForeignKey('Person', related_name='captain')
     name = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.name
-
 
 class Person(models.Model):
     ShirtSizes = (
@@ -28,7 +27,7 @@ class Person(models.Model):
         ('Adult-XL', 'Adult-XL'),
         ('Adult-2X', 'Adult-2X'),
     )
-    username = models.CharField(max_length=30)
+    username = models.CharField(max_length=30, unique=True)
     size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
     first_name = models.CharField(max_length=30)
@@ -59,6 +58,7 @@ class Sponsor(models.Model):
 
     def __unicode__(self):
         return self.last_name+' '+self.first_name
+
 
 class WalkerForm(ModelForm):
     class Meta:
