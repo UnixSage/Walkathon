@@ -1,6 +1,8 @@
 from django.db import models
 from django.forms import ModelForm
 
+import uuid
+
 class Team(models.Model):
     TeamTypes = (
         ('Corporate', 'Corporate'),
@@ -35,6 +37,12 @@ class Person(models.Model):
     emergency_first = models.CharField(max_length=30)
     emergency_last = models.CharField(max_length=30)
     emergency_phone = models.CharField(max_length=10)
+    uuid = models.CharField(max_length=50, editable=False)
+    
+    def save(self):
+        if not self.uuid:
+            self.uuid = uuid.uuid4()
+        super(Person, self).save()
     
     def __unicode__(self):
         return self.last_name+' '+self.first_name

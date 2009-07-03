@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context
 from django.http import HttpResponse, HttpResponseRedirect
 from myproject.walk.models import *
@@ -16,3 +16,7 @@ def NewWalker(request):
         'formset': form,
     })
 
+def walker(request, uuid=None, template='walker.html'):
+    if uuid:
+        walker = get_object_or_404(Person, uuid=uuid)
+    return render_to_response(template, {'walker': walker})

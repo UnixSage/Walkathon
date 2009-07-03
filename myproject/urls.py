@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     (r'^new/', 'myproject.walk.views.NewWalker'),
+    (r'^walker/(?P<uuid>.*)/', 'myproject.walk.views.walker'),
 )
