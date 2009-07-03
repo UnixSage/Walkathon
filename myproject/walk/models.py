@@ -17,10 +17,6 @@ class Team(models.Model):
 
 
 class Person(models.Model):
-    PersonTypes = (
-        ('Walker', 'Walker'),
-        ('Captain', 'Captain'),
-    )
     ShirtSizes = (
         ('Youth-M', 'Youth-M'),
         ('Youth-L', 'Youth-L'),
@@ -30,13 +26,12 @@ class Person(models.Model):
         ('Adult-XL', 'Adult-XL'),
         ('Adult-2X', 'Adult-2X'),
     )
-    type = models.CharField(max_length=10, choices=PersonTypes)
     size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    phone = models.CharField(max_length=10)
-    email = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     emergency_first = models.CharField(max_length=30)
     emergency_last = models.CharField(max_length=30)
     emergency_phone = models.CharField(max_length=10)
@@ -50,7 +45,7 @@ class Sponsor(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     phone = models.CharField(max_length=10)
-    email = models.CharField(max_length=50)
+    contact = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     paid = models.BooleanField(default=False)
 
