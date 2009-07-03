@@ -84,3 +84,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'myproject.walk',
 )
+
+# Import local settings
+try:
+    from settings_local import *
+except ImportError:
+    pass
+
