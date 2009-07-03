@@ -28,6 +28,7 @@ class Person(models.Model):
         ('Adult-XL', 'Adult-XL'),
         ('Adult-2X', 'Adult-2X'),
     )
+    username = models.CharField(max_length=30)
     size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
     first_name = models.CharField(max_length=30)
@@ -36,7 +37,7 @@ class Person(models.Model):
     email = models.EmailField(max_length=50)
     emergency_first = models.CharField(max_length=30)
     emergency_last = models.CharField(max_length=30)
-    emergency_phone = models.CharField(max_length=10)
+    emergency_phone = models.CharField(max_length=50)
     uuid = models.CharField(max_length=50, editable=False)
     
     def save(self):
@@ -52,8 +53,7 @@ class Sponsor(models.Model):
     walker = models.ForeignKey(Person)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    phone = models.CharField(max_length=10)
-    contact = models.CharField(max_length=100)
+    contact = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     paid = models.BooleanField(default=False)
 
