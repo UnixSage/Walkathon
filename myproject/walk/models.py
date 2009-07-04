@@ -54,11 +54,15 @@ class Sponsor(models.Model):
     last_name = models.CharField(max_length=30)
     contact = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
-    paid = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False, blank=True)
 
     def __unicode__(self):
         return self.last_name+' '+self.first_name
 
+class SponsorForm(ModelForm):
+    class Meta:
+        model = Sponsor
+        exclude = ('walker',)
 
 class WalkerForm(ModelForm):
     class Meta:
