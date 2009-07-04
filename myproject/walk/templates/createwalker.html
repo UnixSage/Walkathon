@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Create New Walker{% endblock %}
+
+{% block content %}
+  <form method="POST" action="/new/">
+    <table>
+      {{ formset }}
+    </table>
+    <input type="submit" value="Submit" />
+  </form>
+{% endblock %}

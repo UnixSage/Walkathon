@@ -3,7 +3,7 @@ from django.template import Template, Context
 from django.http import HttpResponse, HttpResponseRedirect
 from myproject.walk.models import *
 
-def NewWalker(request):
+def createwalker(request):
     if request.method == 'POST':
         form = WalkerForm(request.POST)
         if form.is_valid():
@@ -11,8 +11,7 @@ def NewWalker(request):
             return HttpResponseRedirect('http://autismyork.org')
     else:
         form = WalkerForm()
-        teamform = NewTeamForm()
-    return render_to_response('NewWalker.html', {
+    return render_to_response('createwalker.html', {
         'formset': form,
     })
 
