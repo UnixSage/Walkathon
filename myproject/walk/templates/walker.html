@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }}{% endblock %}
+{% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }} ({{walker.username}}){% endblock %}
 
 {% block content %}
     Walker: {{ walker.first_name }} {{ walker.last_name }}.
+    <ul>
+      <li><a href="/walker/{{walker.uuid}}/">Private Url</a>
+      <li><a href="/walker/{{walker.username}}/">public Url</a>
+    </ul>
 {% endblock %}

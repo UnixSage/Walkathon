@@ -28,7 +28,7 @@ class Person(models.Model):
         ('Adult-2X', 'Adult-2X'),
     )
     username = models.CharField(max_length=30, unique=True)
-    size = models.CharField(max_length=15, choices=ShirtSizes)
+    shirt_size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -63,6 +63,8 @@ class Sponsor(models.Model):
 class WalkerForm(ModelForm):
     class Meta:
         model = Person
+        exclude = ('team',)
+
 
 class NewTeamForm(ModelForm):
     class Meta:

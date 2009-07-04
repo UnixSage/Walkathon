@@ -2,6 +2,20 @@
 
 {% block title %}Create New Walker{% endblock %}
 
+{% block style %}
+label {
+  width: 12em;
+  float: left;
+  text-align: right;
+  margin-right: 0.5em;
+  display: block
+}
+
+.submit input {
+  margin-left: 4.5em;
+} 
+{% endblock %}
+
 {% block content %}
   <form method="POST" action="/new/">
     <table>
