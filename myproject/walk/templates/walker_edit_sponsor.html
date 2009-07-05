@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        <ul>
+            {{ form.as_ul }}
+        </ul>
+        <button type="submit">Add Sponsor</button>
+    </form>
+{% endblock %}

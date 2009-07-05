@@ -21,6 +21,8 @@
                 <th>Contact</th>
                 <th>Amount</th>
                 <th>Paid</th>
+                <th>Edit</th>
+                <th>Remote</th>
             </tr>
             {% if sponsors %}
                 {% for sponsor in sponsors %}
@@ -36,6 +38,14 @@
                                 <img src="/media/admin_media/img/admin/icon-no.gif" />
                             {% endif %}
                         </td>
+                        <td>
+                            <a href="{% url walker_edit_sponsor walker.uuid sponsor.id %}">
+                                <img src="{{ MEDIA_URL }}images/icons/user_edit.png" />
+                            </a>
+                        </td>
+                        <td>
+                            <img src="{{ MEDIA_URL }}images/icons/user_delete.png" onclick="deleteSponsor({{ sponsor.id }});"/>
+                        </td>
                     </tr>
                 {% endfor %}
             {% else %}
@@ -45,4 +55,16 @@
             {% endif %}
         </table>
     </div>
+    <form name="sponsor_form" method="post">
+        <input type="hidden" name="sponsor_id" value="">
+    </form>
+    <script type="text/javascript">
+        function deleteSponsor(id) {
+            if (confirm("Are you sure you want to remove this sponsor?")) {
+                document.sponsor_form.action = "{% url walker_delete_sponsor walker.uuid %}";
+                document.sponsor_form.sponsor_id.value = id;
+                document.sponsor_form.submit();
+            }
+        }
+    </script>
 {% endblock %}

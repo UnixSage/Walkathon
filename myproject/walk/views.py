@@ -36,3 +36,27 @@ def walker_add_sponsor(request, uuid=None, template='walker_add_sponsor.html'):
     else:
         form = SponsorForm()
     return render_to_response(template, {'walker': walker, 'form': form, 'message': message})
+
+def walker_edit_sponsor(request, uuid=None, id=None, template='walker_edit_sponsor.html'):
+    message = None
+    # Walker check is pretty much just here for security
+    walker = get_object_or_404(Person, uuid=uuid)
+    sponsor = get_object_or_404(Sponsor, id=id)
+    if request.method == 'POST':
+        form = SponsorForm(request.POST, instance=sponsor)
+        if form.is_valid():
+            form.save()
+            message = 'Successfully saved sponsor'
+            return HttpResponseRedirect(reverse('walker_private', kwargs={'uuid': uuid}))
+    else:
+        form = SponsorForm(instance=sponsor)
+    return render_to_response(template, {'walker': walker, 'form': form, 'message': message})
+
+def walker_delete_sponsor(request, uuid=None):
+    message = None
+    walker = get_object_or_404(Person, uuid=uuid)
+    id = request.POST['sponsor_id']
+    sponsor = get_object_or_404(Sponsor, id=id, walker=walker)
+    sponsor.delete()
+    return HttpResponseRedirect(reverse('walker_private', kwargs={'uuid': uuid}))
+    
