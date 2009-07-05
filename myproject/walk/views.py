@@ -19,7 +19,14 @@ def createwalker(request):
 def walker_private(request, uuid=None, template='walker.html'):
     walker = get_object_or_404(Person, uuid=uuid)
     sponsors = Sponsor.objects.filter(walker=walker)
-    return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = WalkerSettingsForm(request.POST, instance=walker)
+        if form.is_valid():
+            form.save()
+    else:
+        form = WalkerSettingsForm(instance=walker)
+    return render_to_response(template, {'walker': walker, 'sponsors': sponsors, 'form': form}, context_instance=RequestContext(request))
+    #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
 
 def walker_add_sponsor(request, uuid=None, template='walker_add_sponsor.html'):
     message = None

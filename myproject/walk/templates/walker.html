@@ -58,6 +58,14 @@
     <form name="sponsor_form" method="post">
         <input type="hidden" name="sponsor_id" value="">
     </form>
+    <div id="walker_settings">
+        <form method="post">
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <button type="submit">Update</button>
+        </form>
+    </div>
     <script type="text/javascript">
         function deleteSponsor(id) {
             if (confirm("Are you sure you want to remove this sponsor?")) {

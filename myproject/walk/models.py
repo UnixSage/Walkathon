@@ -70,6 +70,10 @@ class WalkerForm(ModelForm):
         model = Person
         exclude = ('team',)
 
+class WalkerSettingsForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ('shirt_size', 'team', 'first_name', 'last_name', 'phone', 'email', 'emergency_first', 'emergency_last', 'goal')
 
 class NewTeamForm(ModelForm):
     class Meta:
