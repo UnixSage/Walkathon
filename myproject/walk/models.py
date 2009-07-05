@@ -38,6 +38,7 @@ class Person(models.Model):
     emergency_last = models.CharField(max_length=30)
     emergency_phone = models.CharField(max_length=50)
     uuid = models.CharField(max_length=50, editable=False)
+    goal = models.IntegerField(blank=True, null=True)
     
     def save(self):
         if not self.uuid:
