@@ -68,7 +68,7 @@ class SponsorForm(ModelForm):
 class WalkerForm(ModelForm):
     class Meta:
         model = Person
-        exclude = ('team',)
+        exclude = ('team','goal')
 
 class WalkerSettingsForm(ModelForm):
     class Meta:
