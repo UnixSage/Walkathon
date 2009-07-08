@@ -4,15 +4,15 @@ from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from myproject.walk.models import *
 
-def createwalker(request):
+def create_walker(request):
     if request.method == 'POST':
         form = WalkerForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('http://autismyork.org')
+            walker=form.save()
+            return HttpResponseRedirect(reverse('walker_private', kwargs={'uuid': walker.uuid}))
     else:
         form = WalkerForm()
-    return render_to_response('createwalker.html', {
+    return render_to_response('create_walker.html', {
         'formset': form,
     })
 
