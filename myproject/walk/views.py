@@ -4,7 +4,7 @@ from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from myproject.walk.models import *
 
-def create_walker(request):
+def create_walker(request, uuid=None, template='create_walker.html'):
     if request.method == 'POST':
         form = WalkerForm(request.POST)
         if form.is_valid():
@@ -12,9 +12,12 @@ def create_walker(request):
             return HttpResponseRedirect(reverse('walker_private', kwargs={'uuid': walker.uuid}))
     else:
         form = WalkerForm()
-    return render_to_response('create_walker.html', {
-        'formset': form,
-    })
+    return render_to_response(template,
+        {
+            'formset': form,
+        },
+        context_instance=RequestContext(request)        
+    )
 
 def walker_private(request, uuid=None, template='walker.html'):
     walker = get_object_or_404(Person, uuid=uuid)
