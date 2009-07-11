@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
-from myproject.walk.models import *
+from myproject.walk.paypal import *
 
 def create_walker(request, uuid=None, template='create_walker.html'):
     if request.method == 'POST':
@@ -69,4 +69,16 @@ def walker_delete_sponsor(request, uuid=None):
     sponsor = get_object_or_404(Sponsor, id=id, walker=walker)
     sponsor.delete()
     return HttpResponseRedirect(reverse('walker_private', kwargs={'uuid': uuid}))
-    
+
+class MyEndPoint(Endpoint):
+    def process(self, data):
+        datatest=1
+        # Do something with valid data from PayPal - e-mail it to yourself,
+        # stick it in a database, generate a license key and e-mail it to the
+        # user... whatever
+        
+    def process_invalid(self, data):
+        datatest=1
+        # Do something with invalid data (could be from anywhere) - you 
+        # should probably log this somewhere
+

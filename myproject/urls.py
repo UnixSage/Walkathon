@@ -4,7 +4,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
-#from myproject.walk.views import currentDatetime
+from myproject.walk.views import MyEndPoint
 
 urlpatterns = patterns('',
     # Example:
@@ -21,6 +21,7 @@ urlpatterns = patterns('',
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/add-sponsor/$', 'myproject.walk.views.walker_add_sponsor', name='walker_add_sponsor'),
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/edit-sponsor/(?P<id>\d+)/$', 'myproject.walk.views.walker_edit_sponsor', name='walker_edit_sponsor'),
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/delete-sponsor/$', 'myproject.walk.views.walker_delete_sponsor', name='walker_delete_sponsor'),
+    (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
 )
 
 if settings.DEBUG:
