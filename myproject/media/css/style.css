@@ -40,6 +40,33 @@ body {
     background-color: #263A81;
 }
 
+#mainNavigation ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 10px;
+}
+
+#mainNavigation li {
+    display: block;
+    float: left;
+    margin: 5px 10px;
+}
+
+#mainNavigation li a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#mainNavigation li a:hover {
+    color: #F6F064;
+}
+
 #contentWrapper {
     padding: 20px;
+}
+
+#contentWrapper p {
+    margin: 5px 0 10px;
 }
