@@ -25,6 +25,15 @@ body {
     background-color: #DDD;
 }
 
+h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+}
 #pageWrapper {
     width: 758px;
     background-color: #FFF;
@@ -35,22 +44,33 @@ body {
     padding: 20px;
 }
 
-#mainNavigation {
-    height: 30px;
-    background-color: #263A81;
+#contentWrapper {
+    padding: 20px;
 }
 
-#mainNavigation ul {
+#contentWrapper p {
+    margin: 5px 0 10px;
+}
+
+
+/***  Navigation ***/
+ul.navigation {
     list-style: none;
     margin: 0;
     padding-left: 10px;
 }
 
-#mainNavigation li {
+ul.navigation li {
     display: block;
     float: left;
     margin: 5px 10px;
 }
+
+#mainNavigation {
+    height: 30px;
+    background-color: #263A81;
+}
+
 
 #mainNavigation li a {
     color: #FFF;
@@ -63,10 +83,73 @@ body {
     color: #F6F064;
 }
 
-#contentWrapper {
-    padding: 20px;
+#walkerNavigation ul {
+    
 }
 
-#contentWrapper p {
-    margin: 5px 0 10px;
+/***  Forms  ***/
+form.commonform > fieldset {
+    border: 0px solid;
+}
+form.commonform > fieldset > ul {
+    padding-left: 0px;
+    margin-left: 0px;
+    list-style: none;
+    list-style-image: none;
+}
+form.commonform > fieldset > ul > li {
+    overflow: hidden;
+    clear: both;
+    margin: 2px;
+}
+form.commonform > fieldset > ul > li > textarea {
+    padding: 4px;
+    background-color: #EFEFEF;
+    border: 2px solid #CCC;
+    padding-left: 8px;
+    width: 350px;
+}
+form.commonform > fieldset > ul > li > label {
+    float: left;
+    width: 180px;
+    line-height: 28px;
+    text-align: right;
+    margin-right: 5px;
+}
+form.commonform > fieldset > ul > li > label.required {
+    font-weight: bold;
+}
+form.commonform > fieldset > p {
+    clear: both;
+    margin: 5px;
+    overflow: hidden;
+}
+form.commonform > fieldset > ul > li > input[type=text], form.commonform > fieldset > ul > li > input[type=password] {
+    float: left;
+    background: #EFEFEF;
+    width: 200px;
+    font-size: 1.2em;
+    height: 24px;
+    padding-left: 5px;
+    line-height: 24px;
+    border: 2px solid #CCC;
+}
+/* Many-to-many checkboxes */
+form.commonform > fieldset > ul > li > ul {
+    list-style: none;
+    list-style-image: none;
+    margin-left: 80px;
+}
+form.commonform > fieldset > ul > li > ul > li {
+    margin-top: 5px;
+}
+/* Errors */
+form.commonform > fieldset > ul > li > ul.errorlist {
+    padding: 0 0 0 10px;
+    margin: 0 130px 0 0;
+    color: red;
+    float: right;
+}
+form.commonform > fieldset > input[type=submit] {
+    margin-left: 185px;
 }

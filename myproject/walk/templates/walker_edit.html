@@ -1,0 +1,14 @@
+{% extends 'walker_base.html' %}
+
+{% block walker %}
+    <div id="walker_settings">
+        <form method="post" class="commonform">
+            <fieldset>
+                <ul>
+                    {{ form.as_ul }}
+                </ul>
+                <button type="submit">Update</button>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

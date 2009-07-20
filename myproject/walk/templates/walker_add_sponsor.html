@@ -1,10 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'walker_base.html' %}
 
-{% block content %}
-    <form method="post">
-        <ul>
-            {{ form.as_ul }}
-        </ul>
-        <button type="submit">Add Sponsor</button>
+{% block walker %}
+    <form method="post" class="commonform">
+        <fieldset>
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <button type="submit">Add Sponsor</button>
+        </fieldset>
     </form>
 {% endblock %}
