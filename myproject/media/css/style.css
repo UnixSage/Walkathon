@@ -18,3 +18,28 @@ select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;}
 table{font-size:inherit;font:100%;}
 pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
 
+
+/***  Global Styles ***/
+body {
+    width: 100%;
+    background-color: #DDD;
+}
+
+#pageWrapper {
+    width: 758px;
+    background-color: #FFF;
+    margin: 0 auto;
+}
+
+#logo {
+    padding: 20px;
+}
+
+#mainNavigation {
+    height: 30px;
+    background-color: #263A81;
+}
+
+#contentWrapper {
+    padding: 20px;
+}
