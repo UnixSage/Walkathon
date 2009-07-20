@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/edit-sponsor/(?P<id>\d+)/$', 'myproject.walk.views.walker_edit_sponsor', name='walker_edit_sponsor'),
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/delete-sponsor/$', 'myproject.walk.views.walker_delete_sponsor', name='walker_delete_sponsor'),
     (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
+    
+    # I'm guessing this is temporary - likely to be replaced with a Flatpage or something
+    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'home.html'}),
 )
 
 if settings.DEBUG:
