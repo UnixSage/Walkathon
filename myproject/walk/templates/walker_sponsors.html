@@ -4,7 +4,7 @@
     <div id="walker_sponsors">
         {% if sponsors %}
             <div id="walker_add_sponsor_link">
-                <a href="{% url walker_add_sponsor walker.uuid %}">Add additional sponsor</a>
+                <a href="{% url walker_add_sponsor %}">Add additional sponsor</a>
             </div>
         {% endif %}
         <table>
@@ -32,7 +32,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url walker_edit_sponsor walker.uuid sponsor.id %}">
+                            <a href="{% url walker_edit_sponsor sponsor.id %}">
                                 <img src="{{ MEDIA_URL }}images/icons/user_edit.png" />
                             </a>
                         </td>
@@ -43,7 +43,7 @@
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="5">You haven't added any sponsors yet - <a href="{% url walker_add_sponsor walker.uuid %}">Add one now!</a></td>
+                    <td colspan="5">You haven't added any sponsors yet - <a href="{% url walker_add_sponsor %}">Add one now!</a></td>
                 </tr>
             {% endif %}
         </table>
@@ -54,7 +54,7 @@
     <script type="text/javascript">
         function deleteSponsor(id) {
             if (confirm("Are you sure you want to remove this sponsor?")) {
-                document.sponsor_form.action = "{% url walker_delete_sponsor walker.uuid %}";
+                document.sponsor_form.action = "{% url walker_delete_sponsor %}";
                 document.sponsor_form.sponsor_id.value = id;
                 document.sponsor_form.submit();
             }

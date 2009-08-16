@@ -17,16 +17,20 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     url(r'^new/$', 'myproject.walk.views.create_walker', name='create_walker'),
+    url(r'^walker/edit/$', 'myproject.walk.views.walker_edit', name='walker_edit'),
+    url(r'^walker/sponsors/$', 'myproject.walk.views.walker_sponsors', name='walker_sponsors'),
+    url(r'^walker/add-sponsor/$', 'myproject.walk.views.walker_add_sponsor', name='walker_add_sponsor'),
+    url(r'^walker/edit-sponsor/(?P<id>\d+)/$', 'myproject.walk.views.walker_edit_sponsor', name='walker_edit_sponsor'),
+    url(r'^walker/delete-sponsor/$', 'myproject.walk.views.walker_delete_sponsor', name='walker_delete_sponsor'),
+    url(r'^walker/check_login/$', 'myproject.walk.views.walker_not_set', name='walker_not_set'),
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/$', 'myproject.walk.views.walker_home', name='walker_home'),
-    url(r'^walker/(?P<uuid>[a-z0-9\-]*)/edit/$', 'myproject.walk.views.walker_edit', name='walker_edit'),
-    url(r'^walker/(?P<uuid>[a-z0-9\-]*)/sponsors/$', 'myproject.walk.views.walker_sponsors', name='walker_sponsors'),
-    url(r'^walker/(?P<uuid>[a-z0-9\-]*)/add-sponsor/$', 'myproject.walk.views.walker_add_sponsor', name='walker_add_sponsor'),
-    url(r'^walker/(?P<uuid>[a-z0-9\-]*)/edit-sponsor/(?P<id>\d+)/$', 'myproject.walk.views.walker_edit_sponsor', name='walker_edit_sponsor'),
-    url(r'^walker/(?P<uuid>[a-z0-9\-]*)/delete-sponsor/$', 'myproject.walk.views.walker_delete_sponsor', name='walker_delete_sponsor'),
     (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
     
     # I'm guessing this is temporary - likely to be replaced with a Flatpage or something
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'home.html'}),
+
+    (r'^test/$', 'myproject.walk.views.test'),
+    #url(r'^(?P<username>[\w\._-]+)/$', 'myproject.walk.views.public_home', name='public_home'),
 )
 
 if settings.DEBUG:

@@ -2,7 +2,9 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
+
 from myproject.walk.models import *
+from myproject.walk.decorators import walker_required
 from myproject.walk.paypal import *
 
 def create_walker(request, uuid=None, template='create_walker.html'):
@@ -20,8 +22,23 @@ def create_walker(request, uuid=None, template='create_walker.html'):
         context_instance=RequestContext(request)        
     )
 
+def walker_not_set(request):
+    return render_to_response('walker_not_set.html', context_instance=RequestContext(request))
+
 def walker_home(request, uuid=None, template='walker.html'):
     walker = get_object_or_404(Person, uuid=uuid)
+    if request.method == 'POST':
+        form = WalkerSettingsForm(request.POST, instance=walker)
+        if form.is_valid():
+            form.save()
+    else:
+        form = WalkerSettingsForm(instance=walker)
+    request.session.__setitem__('walker_uuid', uuid)
+    return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
+    #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
+
+def public_home(request, username=None, template='walker.html'):
+    walker = get_object_or_404(Person, username=username)
     if request.method == 'POST':
         form = WalkerSettingsForm(request.POST, instance=walker)
         if form.is_valid():
@@ -31,8 +48,9 @@ def walker_home(request, uuid=None, template='walker.html'):
     return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
     #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
 
-def walker_edit(request, uuid=None, template='walker_edit.html'):
-    walker = get_object_or_404(Person, uuid=uuid)
+@walker_required
+def walker_edit(request, template='walker_edit.html'):
+    walker = _get_walker(request)
     if request.method == 'POST':
         form = WalkerSettingsForm(request.POST, instance=walker)
         if form.is_valid():
@@ -41,14 +59,16 @@ def walker_edit(request, uuid=None, template='walker_edit.html'):
         form = WalkerSettingsForm(instance=walker)
     return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
 
-def walker_sponsors(request, uuid=None, template='walker_sponsors.html'):
-    walker = get_object_or_404(Person, uuid=uuid)
+@walker_required
+def walker_sponsors(request, template='walker_sponsors.html'):
+    walker = _get_walker(request)
     sponsors = Sponsor.objects.filter(walker=walker)
     return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
 
-def walker_add_sponsor(request, uuid=None, template='walker_add_sponsor.html'):
+@walker_required
+def walker_add_sponsor(request, template='walker_add_sponsor.html'):
     message = None
-    walker = get_object_or_404(Person, uuid=uuid)
+    walker = _get_walker(request)
     if request.method == 'POST':
         form = SponsorForm(request.POST)
         form.walker = walker
@@ -62,10 +82,11 @@ def walker_add_sponsor(request, uuid=None, template='walker_add_sponsor.html'):
         form = SponsorForm()
     return render_to_response(template, {'walker': walker, 'form': form, 'message': message}, context_instance=RequestContext(request))
 
-def walker_edit_sponsor(request, uuid=None, id=None, template='walker_edit_sponsor.html'):
+@walker_required
+def walker_edit_sponsor(request, id=None, template='walker_edit_sponsor.html'):
     message = None
     # Walker check is pretty much just here for security
-    walker = get_object_or_404(Person, uuid=uuid)
+    walker = _get_walker(request)
     sponsor = get_object_or_404(Sponsor, id=id)
     if request.method == 'POST':
         form = SponsorForm(request.POST, instance=sponsor)
@@ -77,9 +98,10 @@ def walker_edit_sponsor(request, uuid=None, id=None, template='walker_edit_spons
         form = SponsorForm(instance=sponsor)
     return render_to_response(template, {'walker': walker, 'form': form, 'message': message}, context_instance=RequestContext(request))
 
-def walker_delete_sponsor(request, uuid=None):
+@walker_required
+def walker_delete_sponsor(request):
     message = None
-    walker = get_object_or_404(Person, uuid=uuid)
+    walker = _get_walker(request)
     id = request.POST['sponsor_id']
     sponsor = get_object_or_404(Sponsor, id=id, walker=walker)
     sponsor.delete()
@@ -97,3 +119,22 @@ class MyEndPoint(Endpoint):
         # Do something with invalid data (could be from anywhere) - you 
         # should probably log this somewhere
 
+@walker_required
+def test(request):
+    #if request.session.__contains__('walker_uuid'):
+    #    uuid = request.session.__getitem__('walker_uuid')
+    #else:
+    #    uuid = None
+    walker = _get_walker(request)
+    
+    return render_to_response('base.html', {'session': walker.uuid}, context_instance=RequestContext(request))
+    
+def _get_walker(request):
+    if request.session.__contains__('walker_uuid'):
+        uuid = request.session.__getitem__('walker_uuid')
+        walker = get_object_or_404(Person, uuid=uuid)
+        return walker
+    else:
+        return None
+
+    
