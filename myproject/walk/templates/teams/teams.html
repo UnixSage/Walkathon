@@ -1,0 +1,24 @@
+{% extends 'walker_base.html' %}
+
+{% block walker %}
+    <table class="lightweight">
+        <tr>
+            <th>Team Name</th>
+            <th>Captain</th>
+            <th>Join Team</th>
+        </tr>
+        {% for team in teams %}
+            <tr class="{% cycle 'even' 'odd' %}">
+                <td>{{ team.name }}</td>
+                <td>{{ team.captain.username }}</td>
+                <td>
+                    {% ifequal team.captain walker %}
+                        Your Team
+                    {% else %}
+                        <a href="#" class="actionlink">Request to Join this Team</a>
+                    {% endifequal %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

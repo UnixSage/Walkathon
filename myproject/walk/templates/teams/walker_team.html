@@ -1,0 +1,14 @@
+{% extends 'walker_base.html' %}
+
+{% block walker %}
+    {% if walker.team %}
+        <div id="teaminfo">You are on the following team: <span id="teamname">{{ walker.team.name }}</span></div>
+        <div id="changeteam"><a href="#">Select a new team</a></div>
+    {% else %}
+        <div id="noteam">
+            You have not yet joined a team. 
+            <a href="{% url teams %}">Join a team</a> or <a href="#">Create a new team</a> (you will be designated as team captain)
+        </div>
+    {% endif %}
+        
+{% endblock %}
