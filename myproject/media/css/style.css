@@ -153,3 +153,32 @@ form.commonform > fieldset > ul > li > ul.errorlist {
 form.commonform > fieldset > input[type=submit] {
     margin-left: 185px;
 }
+
+
+/***  Tables  ***/
+table.lightweight {
+    border: solid 1px #DCE8F5;
+    border-collapse: collapse;
+}
+table.lightweight td, table.lightweight th {
+    padding: 5px;
+    border: solid 1px #DCE8F5;
+}
+table.lightweight tr.even:hover, table.lightweight tr.odd:hover {
+    background-color: #DCE8F5;
+}
+table.lightweight tr.even:hover a.actionlink, table.lightweight tr.odd:hover a.actionlink {
+    color: black;
+}
+table.lightweight tr.even {
+    background-color: white;
+}
+table.lightweight tr.even a.actionlink {
+    color: white;
+}
+table.lightweight tr.odd {
+    background-color: #eee;
+}
+table.lightweight tr.odd a.actionlink {
+    color: #eee;
+}

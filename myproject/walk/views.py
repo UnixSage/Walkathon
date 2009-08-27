@@ -33,7 +33,7 @@ def walker_home(request, uuid=None, template='walker.html'):
             form.save()
     else:
         form = WalkerSettingsForm(instance=walker)
-    request.session.__setitem__('walker_uuid', uuid)
+    request.session.__setitem__('walker', walker)
     return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
     #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
 
@@ -107,6 +107,21 @@ def walker_delete_sponsor(request):
     sponsor.delete()
     return HttpResponseRedirect(reverse('walker_home', kwargs={'uuid': uuid}))
 
+@walker_required
+def walker_team(request, template='teams/walker_team.html'):
+    walker = _get_walker(request)
+    return render_to_response(template, {'walker': walker}, context_instance=RequestContext(request))
+
+@walker_required
+def create_team(request, template='teams/create_team.html'):
+    pass
+
+@walker_required
+def teams(request, template='teams/teams.html'):
+    walker = _get_walker(request)
+    teams = Team.objects.all()
+    return render_to_response(template, {'walker': walker, 'teams': teams}, context_instance=RequestContext(request))
+
 class MyEndPoint(Endpoint):
     def process(self, data):
         datatest=1
@@ -130,9 +145,10 @@ def test(request):
     return render_to_response('base.html', {'session': walker.uuid}, context_instance=RequestContext(request))
     
 def _get_walker(request):
-    if request.session.__contains__('walker_uuid'):
-        uuid = request.session.__getitem__('walker_uuid')
-        walker = get_object_or_404(Person, uuid=uuid)
+    if request.session.__contains__('walker'):
+        #uuid = request.session.__getitem__('walker_uuid')
+        walker = request.session.__getitem__('walker')
+        #walker = get_object_or_404(Person, uuid=uuid)
         return walker
     else:
         return None

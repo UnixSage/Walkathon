@@ -23,7 +23,11 @@ urlpatterns = patterns('',
     url(r'^walker/edit-sponsor/(?P<id>\d+)/$', 'myproject.walk.views.walker_edit_sponsor', name='walker_edit_sponsor'),
     url(r'^walker/delete-sponsor/$', 'myproject.walk.views.walker_delete_sponsor', name='walker_delete_sponsor'),
     url(r'^walker/check_login/$', 'myproject.walk.views.walker_not_set', name='walker_not_set'),
+    url(r'^mywalk/team/$', 'myproject.walk.views.walker_team', name='walker_team'),
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/$', 'myproject.walk.views.walker_home', name='walker_home'),
+    url(r'^teams/$', 'myproject.walk.views.teams', name='teams'),
+    url(r'^teams/new/$', 'myproject.walk.views.create_team', name='create_team'),
+
     (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
     
     # I'm guessing this is temporary - likely to be replaced with a Flatpage or something
