@@ -12,7 +12,7 @@ class Team(models.Model):
     type = models.CharField(max_length=10, choices=TeamTypes)
     captain = models.ForeignKey('Person', related_name='captain')
     name = models.CharField(max_length=50)
-    company = models.CharField(max_length=50)
+    company = models.CharField(max_length=50, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
