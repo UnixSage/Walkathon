@@ -3,12 +3,44 @@
 {% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }} ({{walker.username}}){% endblock %}
 
 {% block walker %}
-    {% if announcements %}
-        <div id="announcements">
-            {{ announcements.content }}
+    <style type="text/css">
+        .hp_box {
+            padding: 10px 10px 10px 0;
+            width: 438px;
+        }
+        .hp_box .box_header {
+            font-size: 1.3em;
+            font-weight: bold;
+            border-bottom: solid 1px #263A81;
+            margin: 0 0 5px 0;
+            padding: 0 0 5px 0;
+        }
+    </style>
+    
+    <div style="width: 718px; margin: 10px 0 0 0;">
+        <div style="width: 180px; float: right; margin-top: 10px;"><a href="{% url walker_sponsors %}"><img src="http://xdal.org/thermometer/thermometer.cgi?showText=on&goalText=GOAL+-+&goal={{ walker.goal }}&current={{ current_pledges }}&asOf={% now "M j" %}&suffix=&unit=%24&precision=1&graduations=0&width=180"></a></div>
+        {% if announcements %}
+            <div class="hp_box" style="float: left;">
+                <div class="box_header">Announcements</div>
+                <div class="box_content">{{ announcements.content }}</div>
+            </div>
+        {% endif %}
+        <div class="hp_box" style="float: left;">
+            <div class="box_header">My Sponsors</div>
+            <div class="box_content">
+                <table class="lightweight">
+                    <tr>
+                        <td>Number of Sponsors</td><td>13</td>
+                    </tr><tr>
+                        <td>Total Money Raised</td><td>$1,025</td>
+                    </tr><tr>
+                        <td>Money Collected</td><td>$875</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    {% endif %}
-    Walker: {{ walker.first_name }} {{ walker.last_name }}.
+    </div>
+    <div style="clear: both;">
     {% comment %}<ul>
       <li><a href="/walker/{{walker.uuid}}/">Private Url</a>
       <li><a href="/walker/{{walker.username}}/">public Url</a>

@@ -15,8 +15,16 @@
             </div>
             <div id="mainNavigation">
                 <ul class="navigation">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about/">About the Walk</a></li>
+                    {% if request.session.walker_uuid %}
+                        <li><a href="{% url walker_home request.session.walker_uuid %}">My Homepage</a></li>
+                    {% else %}
+                        <li><a href="/">Home</a></li>
+                    {% endif %}
+                    <li><a href="http://autismyork.org/index.php?option=com_content&view=category&layout=blog&id=1&Itemid=20">About the Walk</a></li>
+                    {% if request.session.walker_uuid %}
+                    {% else %}
+                        <li><a href="/new/">Register Now</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <div id="contentWrapper">

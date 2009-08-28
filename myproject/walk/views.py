@@ -1,10 +1,12 @@
 from django.contrib.flatpages.models import FlatPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
+from walk.forms import WalkerSettingsForm
 from walk.models import *
 from walk.decorators import walker_required
 from walk.paypal import *
@@ -33,14 +35,9 @@ def walker_home(request, uuid=None, template='walker.html'):
     except ObjectDoesNotExist:
         announcements = None
     walker = get_object_or_404(Person, uuid=uuid)
-    if request.method == 'POST':
-        form = WalkerSettingsForm(request.POST, instance=walker)
-        if form.is_valid():
-            form.save()
-    else:
-        form = WalkerSettingsForm(instance=walker)
     request.session.__setitem__('walker_uuid', walker.uuid)
-    return render_to_response(template, {'walker': walker, 'form': form, 'announcements': announcements}, context_instance=RequestContext(request))
+    current_pledges = Sponsor.objects.filter(walker=walker).aggregate(Sum('amount'))['amount__sum']
+    return render_to_response(template, {'walker': walker, 'announcements': announcements, 'current_pledges': current_pledges}, context_instance=RequestContext(request))
 
 def public_home(request, username=None, template='walker.html'):
     walker = get_object_or_404(Person, username=username)
