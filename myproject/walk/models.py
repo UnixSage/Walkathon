@@ -10,7 +10,6 @@ class Team(models.Model):
         ('Honorarium', 'Honorarium'),
     )
     type = models.CharField(max_length=10, choices=TeamTypes)
-    captain = models.ForeignKey('Person', related_name='captain')
     name = models.CharField(max_length=50)
     company = models.CharField(max_length=50, blank=True, null=True)
 
@@ -30,6 +29,7 @@ class Person(models.Model):
     username = models.CharField(max_length=30, unique=True)
     shirt_size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
+    is_captain = models.BooleanField(default=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     phone = models.CharField(max_length=50)
@@ -68,14 +68,14 @@ class SponsorForm(ModelForm):
 class WalkerForm(ModelForm):
     class Meta:
         model = Person
-        exclude = ('team','goal')
+        exclude = ('team','goal','is_captain')
 
 class WalkerSettingsForm(ModelForm):
     class Meta:
         model = Person
         fields = ('shirt_size', 'team', 'first_name', 'last_name', 'phone', 'email', 'emergency_first', 'emergency_last', 'goal')
 
-class NewTeamForm(ModelForm):
+class TeamForm(ModelForm):
     class Meta:
         model = Team
 

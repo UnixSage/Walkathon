@@ -3,10 +3,12 @@
 {% block title %}Create New Walker{% endblock %}
 
 {% block content %}
-  <form method="POST" action="/new/">
-    <table>
-      {{ formset }}
-    </table>
-    <input type="submit" value="Submit" />
-  </form>
+    <form method="POST" class="commonform">
+        <fieldset>
+            <ul>
+                {{ formset.as_ul }}
+            </ul>
+            <input type="submit" value="Submit" />
+        </fieldset>
+    </form>
 {% endblock %}

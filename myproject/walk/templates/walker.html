@@ -3,6 +3,11 @@
 {% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }} ({{walker.username}}){% endblock %}
 
 {% block walker %}
+    {% if announcements %}
+        <div id="announcements">
+            {{ announcements.content }}
+        </div>
+    {% endif %}
     Walker: {{ walker.first_name }} {{ walker.last_name }}.
     {% comment %}<ul>
       <li><a href="/walker/{{walker.uuid}}/">Private Url</a>

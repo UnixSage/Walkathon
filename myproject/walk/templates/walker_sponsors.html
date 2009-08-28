@@ -3,11 +3,11 @@
 {% block walker %}
     <div id="walker_sponsors">
         {% if sponsors %}
-            <div id="walker_add_sponsor_link">
+            <div id="walker_add_sponsor_link" style="margin: 10px 0;">
                 <a href="{% url walker_add_sponsor %}">Add additional sponsor</a>
             </div>
         {% endif %}
-        <table>
+        <table class="lightweight">
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -19,7 +19,7 @@
             </tr>
             {% if sponsors %}
                 {% for sponsor in sponsors %}
-                    <tr>
+                    <tr class="{% cycle 'even' 'odd' %}">
                         <td>{{ sponsor.first_name }}</td>
                         <td>{{ sponsor.last_name }}</td>
                         <td>{{ sponsor.contact }}</td>
@@ -37,7 +37,7 @@
                             </a>
                         </td>
                         <td>
-                            <img src="{{ MEDIA_URL }}images/icons/user_delete.png" onclick="deleteSponsor({{ sponsor.id }});"/>
+                            <img id="delete_sponsor" src="{{ MEDIA_URL }}images/icons/user_delete.png" onclick="deleteSponsor({{ sponsor.id }});"/>
                         </td>
                     </tr>
                 {% endfor %}

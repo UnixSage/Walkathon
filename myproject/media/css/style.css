@@ -182,3 +182,12 @@ table.lightweight tr.odd {
 table.lightweight tr.odd a.actionlink {
     color: #eee;
 }
+
+
+
+#delete_sponsor:hover {
+    cursor: pointer;
+}
+#teamname {
+    font-weight: bold;
+}

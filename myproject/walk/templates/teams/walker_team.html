@@ -1,14 +1,30 @@
 {% extends 'walker_base.html' %}
 
 {% block walker %}
-    {% if walker.team %}
-        <div id="teaminfo">You are on the following team: <span id="teamname">{{ walker.team.name }}</span></div>
-        <div id="changeteam"><a href="#">Select a new team</a></div>
-    {% else %}
-        <div id="noteam">
-            You have not yet joined a team. 
-            <a href="{% url teams %}">Join a team</a> or <a href="#">Create a new team</a> (you will be designated as team captain)
-        </div>
-    {% endif %}
+    <div style="margin: 10px 0;">
+        {% if walker.team %}
+            <div id="teaminfo">
+                You are on the following team: <span id="teamname">{{ walker.team.name }}.</span>
+            </div>
+        {% else %}
+            <div id="noteam">
+                <form method="post">
+                    <div>You have not yet joined a team.</div>
+                    <a href="{% url create_team %}">Create a new team</a> (you will be designated as team captain) or 
+                    join the following team: 
+                    <select name="team">
+                        <option value="0">  ---  </option>
+                        {% for team in teams %}
+                            {% ifequal team walker.team %}
+                            {% else %}
+                                <option value="{{ team.id }}">{{ team.name }}</option>
+                            {% endifequal %}
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Join">
+                </form>
+            </div>
+        {% endif %}
+    </div>
         
 {% endblock %}

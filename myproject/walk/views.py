@@ -1,11 +1,13 @@
+from django.contrib.flatpages.models import FlatPage
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
-from myproject.walk.models import *
-from myproject.walk.decorators import walker_required
-from myproject.walk.paypal import *
+from walk.models import *
+from walk.decorators import walker_required
+from walk.paypal import *
 
 def create_walker(request, uuid=None, template='create_walker.html'):
     if request.method == 'POST':
@@ -26,6 +28,10 @@ def walker_not_set(request):
     return render_to_response('walker_not_set.html', context_instance=RequestContext(request))
 
 def walker_home(request, uuid=None, template='walker.html'):
+    try:
+        announcements = FlatPage.objects.get(url='walker_announcements')
+    except ObjectDoesNotExist:
+        announcements = None
     walker = get_object_or_404(Person, uuid=uuid)
     if request.method == 'POST':
         form = WalkerSettingsForm(request.POST, instance=walker)
@@ -33,9 +39,8 @@ def walker_home(request, uuid=None, template='walker.html'):
             form.save()
     else:
         form = WalkerSettingsForm(instance=walker)
-    request.session.__setitem__('walker', walker)
-    return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
-    #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
+    request.session.__setitem__('walker_uuid', walker.uuid)
+    return render_to_response(template, {'walker': walker, 'form': form, 'announcements': announcements}, context_instance=RequestContext(request))
 
 def public_home(request, username=None, template='walker.html'):
     walker = get_object_or_404(Person, username=username)
@@ -46,7 +51,6 @@ def public_home(request, username=None, template='walker.html'):
     else:
         form = WalkerSettingsForm(instance=walker)
     return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
-    #return render_to_response(template, {'walker': walker, 'sponsors': sponsors}, context_instance=RequestContext(request))
 
 @walker_required
 def walker_edit(request, template='walker_edit.html'):
@@ -77,7 +81,7 @@ def walker_add_sponsor(request, template='walker_add_sponsor.html'):
             sponsor.walker = walker
             sponsor.save()
             message = 'Successfully added sponsor'
-            return HttpResponseRedirect(reverse('walker_home', kwargs={'uuid': uuid}), context_instance=RequestContext(request))
+            return HttpResponseRedirect(reverse('walker_sponsors'))
     else:
         form = SponsorForm()
     return render_to_response(template, {'walker': walker, 'form': form, 'message': message}, context_instance=RequestContext(request))
@@ -93,7 +97,7 @@ def walker_edit_sponsor(request, id=None, template='walker_edit_sponsor.html'):
         if form.is_valid():
             form.save()
             message = 'Successfully saved sponsor'
-            return HttpResponseRedirect(reverse('walker_home', kwargs={'uuid': uuid}))
+            return HttpResponseRedirect(reverse('walker_sponsors'))
     else:
         form = SponsorForm(instance=sponsor)
     return render_to_response(template, {'walker': walker, 'form': form, 'message': message}, context_instance=RequestContext(request))
@@ -105,16 +109,39 @@ def walker_delete_sponsor(request):
     id = request.POST['sponsor_id']
     sponsor = get_object_or_404(Sponsor, id=id, walker=walker)
     sponsor.delete()
-    return HttpResponseRedirect(reverse('walker_home', kwargs={'uuid': uuid}))
+    return HttpResponseRedirect(reverse('walker_sponsors'))
 
 @walker_required
 def walker_team(request, template='teams/walker_team.html'):
-    walker = _get_walker(request)
-    return render_to_response(template, {'walker': walker}, context_instance=RequestContext(request))
+    walker = Person.objects.get(id=_get_walker(request).id)
+    if request.method == 'POST':
+         team = request.POST.get('team')
+         if team and team != '0':
+             walker.team = Team.objects.get(id=team)
+             walker.save()
+         return HttpResponseRedirect(reverse('walker_team'))
+    teams = Team.objects.all()
+    return render_to_response(template, {'walker': walker, 'teams': teams}, context_instance=RequestContext(request))
 
 @walker_required
 def create_team(request, template='teams/create_team.html'):
-    pass
+    walker = _get_walker(request)
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            team = form.save()
+            walker.team = team
+            walker.is_captain = True
+            walker.save()
+            return HttpResponseRedirect(reverse('walker_team'))
+    else:
+        form = TeamForm()
+    return render_to_response(template,
+        {
+            'form': form,
+        },
+        context_instance=RequestContext(request)        
+    )
 
 @walker_required
 def teams(request, template='teams/teams.html'):
@@ -134,21 +161,11 @@ class MyEndPoint(Endpoint):
         # Do something with invalid data (could be from anywhere) - you 
         # should probably log this somewhere
 
-@walker_required
-def test(request):
-    #if request.session.__contains__('walker_uuid'):
-    #    uuid = request.session.__getitem__('walker_uuid')
-    #else:
-    #    uuid = None
-    walker = _get_walker(request)
-    
-    return render_to_response('base.html', {'session': walker.uuid}, context_instance=RequestContext(request))
     
 def _get_walker(request):
-    if request.session.__contains__('walker'):
-        #uuid = request.session.__getitem__('walker_uuid')
-        walker = request.session.__getitem__('walker')
-        #walker = get_object_or_404(Person, uuid=uuid)
+    if request.session.__contains__('walker_uuid'):
+        uuid = request.session.__getitem__('walker_uuid')
+        walker = get_object_or_404(Person, uuid=uuid)
         return walker
     else:
         return None
