@@ -6,7 +6,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
-from walk.forms import WalkerSettingsForm
 from walk.models import *
 from walk.decorators import walker_required
 from walk.paypal import *
