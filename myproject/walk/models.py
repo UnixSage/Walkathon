@@ -73,9 +73,12 @@ class WalkerForm(ModelForm):
 class WalkerSettingsForm(ModelForm):
     class Meta:
         model = Person
-        fields = ('shirt_size', 'team', 'first_name', 'last_name', 'phone', 'email', 'emergency_first', 'emergency_last', 'goal')
+        fields = ('shirt_size', 'first_name', 'last_name', 'phone', 'email', 'emergency_first', 'emergency_last', 'goal')
 
 class TeamForm(ModelForm):
     class Meta:
         model = Team
+
+from walk.utils import decorate_bound_field
+decorate_bound_field()
 
