@@ -85,7 +85,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.flatpages',
-    'myproject.walk',
+    'walk',
 )
 
 # Import local settings

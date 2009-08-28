@@ -1,4 +1,4 @@
-from myproject.walk.models import *
+from walk.models import *
 from django.contrib import admin
 
 class PersonAdmin(admin.ModelAdmin):
