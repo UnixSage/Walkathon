@@ -1,7 +1,7 @@
 from django.contrib.flatpages.models import FlatPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import Template, Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
@@ -36,7 +36,15 @@ def walker_home(request, uuid=None, template='walker.html'):
     walker = get_object_or_404(Person, uuid=uuid)
     request.session.__setitem__('walker_uuid', walker.uuid)
     current_pledges = Sponsor.objects.filter(walker=walker).aggregate(Sum('amount'))['amount__sum']
-    return render_to_response(template, {'walker': walker, 'announcements': announcements, 'current_pledges': current_pledges}, context_instance=RequestContext(request))
+    current_sponsors = Sponsor.objects.filter(walker=walker).aggregate(Count('amount'))['amount__count']
+    current_collected = Sponsor.objects.filter(walker=walker, paid=True).aggregate(Sum('amount'))['amount__sum']
+    return render_to_response(template, {
+        'walker': walker, 
+        'announcements': announcements,
+        'current_pledges': current_pledges,
+        'current_sponsors': current_sponsors,
+        'current_collected': current_collected
+    }, context_instance=RequestContext(request))
 
 def public_home(request, username=None, template='walker.html'):
     walker = get_object_or_404(Person, username=username)

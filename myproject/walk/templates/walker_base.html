@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ walker.first_name }} {{ walker.last_name }}</h1>
+    <h1>{{ walker.first_name }} {{ walker.last_name }} ({{ walker.username }})</h1>
     <div id="walkerNavigation">
         <ul class="navigation">
             <li><a href="{% url walker_home walker.uuid %}">My Overview</a></li>
             <li><a href="{% url walker_sponsors %}">View Sponsors</a></li>
-            <li><a href="{% url walker_edit %}">Customize my Homepage</a></li>
+            <li><a href="{% url walker_edit %}">Update Profile</a></li>
             <li><a href="{% url walker_team %}">Join or Create Team</a></li>
         </ul>
     </div>
