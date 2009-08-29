@@ -34,8 +34,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=30)
     phone = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
-    emergency_first = models.CharField(max_length=30)
-    emergency_last = models.CharField(max_length=30)
+    emergency_name = models.CharField(max_length=30)
     emergency_phone = models.CharField(max_length=50)
     uuid = models.CharField(max_length=50, editable=False)
     goal = models.IntegerField(blank=True, null=True)
@@ -68,12 +67,12 @@ class SponsorForm(ModelForm):
 class WalkerForm(ModelForm):
     class Meta:
         model = Person
-        exclude = ('team','goal','is_captain')
+        exclude = ('team','is_captain')
 
 class WalkerSettingsForm(ModelForm):
     class Meta:
         model = Person
-        fields = ('shirt_size', 'first_name', 'last_name', 'phone', 'email', 'emergency_first', 'emergency_last', 'goal')
+        fields = ('shirt_size', 'first_name', 'last_name', 'phone', 'email', 'emergency_name', 'emergency_phone', 'goal')
 
 class TeamForm(ModelForm):
     class Meta:
