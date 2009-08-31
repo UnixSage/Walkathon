@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }} ({{walker.username}}){% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        .hp_box {
+            padding: 10px 10px 10px 0;
+            width: 438px;
+        }
+        .hp_box .box_header {
+            font-size: 1.3em;
+            font-weight: bold;
+            border-bottom: solid 1px #263A81;
+            margin: 0 0 5px 0;
+            padding: 0 0 5px 0;
+        }
+    </style>
+    <div style="width: 718px; margin: 10px 0 0 0;">
+        <div style="width: 180px; float: right; margin-top: 10px;"><a href="/{{ walker.username }}"><img src="http://xdal.org/thermometer/thermometer.cgi?showText=on&goalText=GOAL+-+&goal={% if walker.goal %}{{ walker.goal }}{% else %}1000{% endif %}&current={% if current_pledges %}{{ current_pledges }}{% else %}0{% endif %}&asOf={% now "M j" %}&suffix=&unit=%24&precision=0&graduations=0&width=180"></a></div>
+
+
+        <div class="hp_box" style="float: left;">
+            <div class="box_header">My Donations</div>
+            <div class="box_content">
+                <table class="lightweight">
+                    <tr>
+                        <td>Number of Sponsors</td><td>{{ current_sponsors }}</td>
+                    </tr><tr>
+                        <td>Total Money Raised</td><td>${% if current_pledges %}{{ current_pledges }}{% else %}0{% endif %}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="float: left; margin-top: 10px;">
+        <hr>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="7873673">
+            <table>
+                <tr><td><input type="hidden" name="on0" value="Walker ID"></td></tr><tr><td><input type="hidden" name="os0" maxlength="60" value="{{ walker.username }}"></td></tr>
+            </table>
+            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+    <div style="clear: both;">
+{% endblock %}

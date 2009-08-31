@@ -52,15 +52,15 @@ def walker_home(request, uuid=None, template='walker.html'):
         'current_collected': current_collected
     }, context_instance=RequestContext(request))
 
-def public_home(request, username=None, template='walker.html'):
+def public_home(request, username=None, template='walker_public.html'):
     walker = get_object_or_404(Person, username=username)
-    if request.method == 'POST':
-        form = WalkerSettingsForm(request.POST, instance=walker)
-        if form.is_valid():
-            form.save()
-    else:
-        form = WalkerSettingsForm(instance=walker)
-    return render_to_response(template, {'walker': walker, 'form': form}, context_instance=RequestContext(request))
+    current_pledges = Sponsor.objects.filter(walker=walker).aggregate(Sum('amount'))['amount__sum']
+    current_sponsors = Sponsor.objects.filter(walker=walker).aggregate(Count('amount'))['amount__count']
+    return render_to_response(template, {
+        'walker': walker, 
+        'current_pledges': current_pledges,
+        'current_sponsors': current_sponsors,
+    }, context_instance=RequestContext(request))
 
 @walker_required
 def walker_edit(request, template='walker_edit.html'):

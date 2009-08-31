@@ -29,11 +29,9 @@ urlpatterns = patterns('',
     url(r'^teams/new/$', 'walk.views.create_team', name='create_team'),
 
     (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
-    
-    # I'm guessing this is temporary - likely to be replaced with a Flatpage or something
+   
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'home.html'}),
-
-    #url(r'^(?P<username>[\w\._-]+)/$', 'walk.views.public_home', name='public_home'),
+    url(r'^(?P<username>[\w\._-]+)/$', 'walk.views.public_home', name='public_home'),
 )
 
 if settings.DEBUG:
