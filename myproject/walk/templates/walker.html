@@ -17,7 +17,7 @@
         }
     </style>
     <div style="width: 718px; margin: 10px 0 0 0;">
-        <div style="width: 180px; float: right; margin-top: 10px;"><a href="{% url walker_sponsors %}"><img src="http://xdal.org/thermometer/thermometer.cgi?showText=on&goalText=GOAL+-+&goal={% if walker.goal %}{{ walker.goal }}{% else %}1000{% endif %}&current={% if current_pledges %}{{ current_pledges }}{% else %}0{% endif %}&asOf={% now "M j" %}&suffix=&unit=%24&precision=1&graduations=0&width=180"></a></div>
+        <div style="width: 180px; float: right; margin-top: 10px;"><a href="{% url walker_sponsors %}"><img src="http://xdal.org/thermometer/thermometer.cgi?showText=on&goalText=GOAL+-+&goal={% if walker.goal %}{{ walker.goal }}{% else %}1000{% endif %}&current={% if current_pledges %}{{ current_pledges }}{% else %}0{% endif %}&asOf={% now "M j" %}&suffix=&unit=%24&precision=0&graduations=0&width=180"></a></div>
 		{% if not walker.goal %}
 			<div class="messages" style="background-color: #FCD28C; padding: 5px 10px; float: left; width: 418px; border: dashed 1px #777;">
 				You have not yet set a goal - <a href="{% url walker_edit %}">Set one now</a>
