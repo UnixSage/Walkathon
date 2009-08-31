@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.contrib.flatpages.models import FlatPage
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db.models import Sum, Count
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import Template, Context, RequestContext
+from django.template import Template, Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
 from walk.models import *
@@ -15,6 +17,10 @@ def create_walker(request, uuid=None, template='create_walker.html'):
         form = WalkerForm(request.POST)
         if form.is_valid():
             walker=form.save()
+            mail_template = loader.get_template('email/welcome.txt')
+            context = Context({'username': walker.username, 'uuid': walker.uuid})
+            mail_body = mail_template.render(context)
+            send_mail(settings.EMAIL_WELCOME_SUBJECT, mail_body, 'walk@autismyork.org', [walker.email], fail_silently=False)
             return HttpResponseRedirect(reverse('walker_home', kwargs={'uuid': walker.uuid}))
     else:
         form = WalkerForm()

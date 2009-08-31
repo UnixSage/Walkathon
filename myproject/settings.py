@@ -96,6 +96,9 @@ INSTALLED_APPS = (
     'walk',
 )
 
+# E-mail Settings
+EMAIL_WELCOME_SUBJECT = 'Important Information About the Walk for Autism'
+
 # Import local settings
 try:
     from settings_local import *

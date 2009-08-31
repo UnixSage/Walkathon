@@ -3,9 +3,9 @@ Now that you have registered for the walk, here is what you will need to do next
 
 1)  Contact potential sponsors to let them know that you are participating in the Walk for Autism and to ask them for donations.  Every amount helps to make a difference!  Feel free to use the sample sponsor message or you may write your own.
 
-2)  Make sure to share this public ID number with your potential sponsors so they can access your personal Walk for Autism webpage to make donations: [public ID] 
+2)  Make sure to share this public ID number with your potential sponsors so they can access your personal Walk for Autism webpage to make donations: {{ username }}
 
-3) Use this private ID number to access your personal Walk for Autism webpage, so you can make updates, as needed: [private ID]
+3) Use this private ID number to access your personal Walk for Autism webpage, so you can make updates, as needed: {{ uuid }}
 
 4)  Make sure to thank each of your sponsors for their support.  You may use the sample sponsor thank you message or write your own.
 
