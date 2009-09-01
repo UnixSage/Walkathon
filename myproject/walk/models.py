@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, RegexField
 
 import uuid
 
@@ -15,6 +15,9 @@ class Team(models.Model):
 
     def __unicode__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['name']
 
 class Person(models.Model):
     ShirtSizes = (
@@ -65,6 +68,10 @@ class SponsorForm(ModelForm):
         exclude = ('walker',)
 
 class WalkerForm(ModelForm):
+    username = RegexField(label="Username", max_length=30, regex=r'^\w+$',
+        help_text = "30 characters or fewer. Alphanumeric characters only (letters, digits and underscores).",
+        error_message = "This value must contain only letters, numbers and underscores.")
+    
     class Meta:
         model = Person
         exclude = ('team','is_captain')
