@@ -191,4 +191,16 @@ def _get_walker(request):
     else:
         return None
 
-    
+def stats(request, template='global_stats.html'):
+    current_pledges = Sponsor.objects.aggregate(Sum('amount'))['amount__sum']
+    current_sponsors = Sponsor.objects.aggregate(Count('amount'))['amount__count']
+    current_walkers = Person.objects.aggregate(Count('username'))['username__count']
+    current_teams = Team.objects.aggregate(Count('name'))['name__count']
+    current_collected = Sponsor.objects.aggregate(Sum('amount'))['amount__sum']
+    return render_to_response(template, {
+        'current_pledges': current_pledges,
+        'current_sponsors': current_sponsors,
+        'current_walkers': current_walkers,
+        'current_teams': current_teams,
+        'current_collected': current_collected
+    }, context_instance=RequestContext(request))

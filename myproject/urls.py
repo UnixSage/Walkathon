@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     url(r'^teams/$', 'walk.views.teams', name='teams'),
     url(r'^teams/new/$', 'walk.views.create_team', name='create_team'),
 
+    url(r'^stats/$', 'walk.views.stats', name='stats'),
+
     (r'^paypal/872a9fcb-9a57-485c-853f-e581a3a0d277/$', MyEndPoint()),
    
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'home.html'}),
