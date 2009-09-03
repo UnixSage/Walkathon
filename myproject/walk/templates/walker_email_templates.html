@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Sponsors for {{ walker.first_name }} {{ walker.last_name }} ({{walker.username}}){% endblock %}
+
+{% block content %}
+    <style type="text/css">
+        .hp_box {
+            padding: 10px 10px 10px 0;
+            width: 438px;
+        }
+        .hp_box .box_header {
+            font-size: 1.3em;
+            font-weight: bold;
+            border-bottom: solid 1px #263A81;
+            margin: 0 0 5px 0;
+            padding: 0 0 5px 0;
+        }
+    </style>
+    <div style="width: 718px; margin: 10px 0 0 0;">
+Dear [potential sponsor’s name],</br>
+<p>
+On October 10, Autism York is hosting Walk for Autism at John Rudy Park, York, PA.  I will be participating in the walk and have set a personal goal of raising ${{ walker.goal }}  to help support this organization. Autism York is dedicated to improving the lives of those affected by Autism Spectrum Disorders and provides York and Adams County families affected by ASD, a place to get advice, encouragement, and support.  Additionally, 100% of the money raised will be used locally to sponsor support meetings, presentations and trainings, social outings, community outreach programs, and a lending library as well as many other worthwhile programs.
+</p>
+<p>
+Please help support my efforts and the work of Autism York by making a donation.  You may send your tax-deductible donation directly to me with checks payable to Autism York or make your contribution online at my personal Autism York Walk for Autism webpage, at www.autismyork.org, and use my sponsor link: <a href="/{{ walker.username }}">http://walk.autismyork.org/{{ walker.username }}</a>.
+</p>
+<p>
+Thank you so much for your help!  Every amount helps to make a huge difference in the lives of those who are impacted by autism.
+</p>
+Sincerely,<br>
+{{ walker.first_name }} {{ walker.last_name }}
+</pre>
+    </div>
+    <div style="clear: both;">
+{% endblock %}

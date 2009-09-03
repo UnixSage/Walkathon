@@ -63,6 +63,17 @@ def public_home(request, username=None, template='walker_public.html'):
     }, context_instance=RequestContext(request))
 
 @walker_required
+def walker_example(request, uuid=None, template='walker_email_templates.html'):
+    walker = _get_walker(request)
+    current_pledges = Sponsor.objects.filter(walker=walker).aggregate(Sum('amount'))['amount__sum']
+    current_sponsors = Sponsor.objects.filter(walker=walker).aggregate(Count('amount'))['amount__count']
+    return render_to_response(template, {
+        'walker': walker, 
+        'current_pledges': current_pledges,
+        'current_sponsors': current_sponsors,
+    }, context_instance=RequestContext(request))
+
+@walker_required
 def walker_edit(request, template='walker_edit.html'):
     walker = _get_walker(request)
     if request.method == 'POST':
