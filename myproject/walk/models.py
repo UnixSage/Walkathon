@@ -69,8 +69,11 @@ class SponsorForm(ModelForm):
 
 class WalkerForm(ModelForm):
     username = RegexField(label="Username", max_length=30, regex=r'^\w+$',
-        help_text = "30 characters or fewer. Alphanumeric characters only (letters, digits and underscores).",
+        help_text = "This is your public ID that others will see; up to 30 charactors, no spaces or special characters.",
         error_message = "This value must contain only letters, numbers and underscores.")
+    goal = RegexField(label="Goal", regex=r'^\w+$',
+        help_text = "Your Personal Goal",
+        error_message = "Whole numbers only")
     
     class Meta:
         model = Person
