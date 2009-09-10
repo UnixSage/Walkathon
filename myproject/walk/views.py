@@ -170,6 +170,15 @@ def teams(request, template='teams/teams.html'):
     teams = Team.objects.all()
     return render_to_response(template, {'walker': walker, 'teams': teams}, context_instance=RequestContext(request))
 
+@walker_required
+def team_roster(request, template='teams/roster.html'):
+    walker = _get_walker(request)
+    persons = Person.objects.filter(team=walker.team)
+    return render_to_response(template, {
+        'walker': walker,
+        'persons': persons
+    }, context_instance=RequestContext(request))
+
 class MyEndPoint(Endpoint):
     def process(self, data):
         datatest=1

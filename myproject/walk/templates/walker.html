@@ -55,6 +55,10 @@
                         <td>Pledge Sheet</td><td><a href="http://autismyork.org/download/WalkPledgeSheet.pdf">Link</a></}td>
                     </tr><tr>
                         <td>Sample Letters</td><td><a href="/walker/example/">Link</a></}td>
+                    {% if walker.is_captain %}
+                    </tr><tr>
+                        <td>Team Roster</td><td><a href="/teams/roster/">Link</a></}td>
+                    {% endif %}
                     </tr>
                 </table>
             </div>

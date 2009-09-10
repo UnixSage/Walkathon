@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^walker/(?P<uuid>[a-z0-9\-]*)/$', 'walk.views.walker_home', name='walker_home'),
     url(r'^teams/$', 'walk.views.teams', name='teams'),
     url(r'^teams/new/$', 'walk.views.create_team', name='create_team'),
+    url(r'^teams/roster/$', 'walk.views.team_roster', name='team_roster'),
 
     url(r'^stats/$', 'walk.views.stats', name='stats'),
 
