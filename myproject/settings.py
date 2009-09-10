@@ -15,9 +15,9 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'nxsg_asawalk'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'nxsg_asawalk'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'dbaccess'         # Not used with sqlite3.
+DATABASE_NAME = 'database'          # Or path to database file if using sqlite3.
+DATABASE_USER = 'dbuser'            # Not used with sqlite3.
+DATABASE_PASSWORD = 'dbpass'        # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
@@ -98,6 +98,11 @@ INSTALLED_APPS = (
 
 # E-mail Settings
 EMAIL_WELCOME_SUBJECT = 'Important Information About the Walk for Autism'
+EMAIL_HOST = 'smtp.myhostingprovider.com'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = 'emailuser'
+EMAIL_HOST_PASSWORD = 'emailpass'
+
 
 # Import local settings
 try:
