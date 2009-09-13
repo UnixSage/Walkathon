@@ -195,7 +195,7 @@ def team_captroster(request, template='teams/captroster.html'):
     walker = _get_walker(request)
     if walker.is_staff==0:
         return HttpResponse('<a href="/">Error - Click to return Home</a>')
-    persons = Person.objects.filter(is_captain=walker.is_captain).order_by('team')
+    persons = Person.objects.filter(is_captain=1).order_by('team')
     return render_to_response(template, {
         'walker': walker,
         'persons': persons
