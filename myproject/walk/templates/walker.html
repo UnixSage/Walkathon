@@ -63,6 +63,20 @@
                 </table>
             </div>
         </div>
+        {% if walker.is_staff %}
+        <div class="hp_box" style="float: left;">
+            <div class="box_header">Staff Tools</div>
+            <div class="box_content">
+                <table class="lightweight">
+                    <tr>
+                        <td>Captain List</td><td><a href="/teams/captroster/">Link</a></}td>
+                    </tr><tr>
+                        <td>Full Roster</td><td><a href="/teams/fullroster/">Link</a></}td>
+                    </tr>
+                </table>
+            </div>
+       </div>
+       {% endif %}
     </div>
     <div style="clear: both;">
 {% endblock %}

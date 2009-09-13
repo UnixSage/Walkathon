@@ -32,6 +32,7 @@ class Person(models.Model):
     username = models.CharField(max_length=30, unique=True)
     shirt_size = models.CharField(max_length=15, choices=ShirtSizes)
     team = models.ForeignKey(Team, blank=True, null=True)
+    is_staff = models.BooleanField(default=False)
     is_captain = models.BooleanField(default=False)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -77,7 +78,7 @@ class WalkerForm(ModelForm):
     
     class Meta:
         model = Person
-        exclude = ('team','is_captain')
+        exclude = ('team','is_staff','is_captain')
 
 class WalkerSettingsForm(ModelForm):
     class Meta:

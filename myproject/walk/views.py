@@ -179,6 +179,28 @@ def team_roster(request, template='teams/roster.html'):
         'persons': persons
     }, context_instance=RequestContext(request))
 
+@walker_required
+def team_fullroster(request, template='teams/fullroster.html'):
+    walker = _get_walker(request)
+    if walker.is_staff==0:
+        return HttpResponse('<a href="/">Error - Click to return Home</a>')
+    persons = Person.objects.order_by('team')
+    return render_to_response(template, {
+        'walker': walker,
+        'persons': persons
+    }, context_instance=RequestContext(request))
+
+@walker_required
+def team_captroster(request, template='teams/captroster.html'):
+    walker = _get_walker(request)
+    if walker.is_staff==0:
+        return HttpResponse('<a href="/">Error - Click to return Home</a>')
+    persons = Person.objects.filter(is_captain=walker.is_captain).order_by('team')
+    return render_to_response(template, {
+        'walker': walker,
+        'persons': persons
+    }, context_instance=RequestContext(request))
+
 class MyEndPoint(Endpoint):
     def process(self, data):
         datatest=1

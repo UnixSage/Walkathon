@@ -1,0 +1,21 @@
+{% extends 'walker_base.html' %}
+
+{% block walker %}
+    <table class="lightweight">
+        <tr>
+            <th>Team</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+        {% for person in persons %}
+            <tr class="{% cycle 'even' 'odd' %}">
+                <td>{{ person.team }}:</td>
+                <td>{{ person.first_name }} {{ person.last_name }}</td>
+                <td>{{ person.phone }}</td>
+                <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+        <a href="mailto:{{ walker.email }}?subject{% for person in persons %}&BCC={{ person.email }}{% endfor %}">Email all Captains</a>
+{% endblock %}
