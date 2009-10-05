@@ -58,6 +58,7 @@ class Sponsor(models.Model):
     last_name = models.CharField(max_length=30)
     contact = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
+    pre_paid = models.BooleanField(default=False, blank=True)
     paid = models.BooleanField(default=False, blank=True)
 
     def __unicode__(self):
@@ -66,7 +67,7 @@ class Sponsor(models.Model):
 class SponsorForm(ModelForm):
     class Meta:
         model = Sponsor
-        exclude = ('walker',)
+        exclude = ('walker','pre_paid')
 
 class WalkerForm(ModelForm):
     username = RegexField(label="Username", max_length=30, regex=r'^\w+$',
